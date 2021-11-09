@@ -1,0 +1,10 @@
+.navbar {
+  border: 1px solid green;
+  width: 100vw;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  padding: 20px 10px;
+}

@@ -1,0 +1,27 @@
+.tasks-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30vw;
+  border: 1px solid blue;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid red;
+}
+
+h3 {
+  text-align: center;
+}
+
+.new-task-button {
+  margin: 0 auto;
+  width: 95%;
+}
+
+tasks-control-bar {
+  background-color: antiquewhite;
+}

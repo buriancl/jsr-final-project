@@ -1,0 +1,6 @@
+.columns-container {
+  display: flex;
+  justify-content: space-between;
+  width: 95vw;
+  margin: 24px auto;
+}
