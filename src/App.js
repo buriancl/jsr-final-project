@@ -15,7 +15,6 @@ import {
 } from "firebase/firestore";
 
 import "./App.css";
-import TaskModal from "./components/TaskModal";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJnRfGVlOZKA4ZI4_xFR_HVVNsR6lnVBA",
@@ -98,7 +97,6 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <Navbar />
-        <TaskModal />
         <div className="columns-container">
           <TaskColumn
             tasks={this.state.tasks}
