@@ -37,6 +37,7 @@ export default class TaskColumn extends Component {
             done={task.done}
             updateTask={this.props.updateTask}
             deleteTask={this.props.deleteTask}
+            notes={task.notes}
           />
         );
       } else {

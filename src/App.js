@@ -1,116 +1,104 @@
 import React from "react";
-import DoneColumn from "./components/DoneColumn";
-import InProgressColumn from "./components/InProgressColumn";
 import Navbar from "./components/Navbar";
-import TaskColumn from "./components/TaskColumn";
-import { initializeApp } from "firebase/app";
+import { Switch, Route, NavLink } from "react-router-dom";
 import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  deleteDoc,
-  setDoc,
-} from "firebase/firestore";
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Kanban from "./pages/Kanban";
 
 import "./App.css";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCJnRfGVlOZKA4ZI4_xFR_HVVNsR6lnVBA",
-  authDomain: "jsr-914-final-project.firebaseapp.com",
-  projectId: "jsr-914-final-project",
-  storageBucket: "jsr-914-final-project.appspot.com",
-  messagingSenderId: "240040456384",
-  appId: "1:240040456384:web:d2646411ba96e6b0a53d25",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 export default class App extends React.Component {
   state = {
-    tasks: [],
+    user: null,
   };
 
-  componentDidMount() {
-    this.readTasks();
-  }
+  login = async (existingUser) => {
+    try {
+      const auth = getAuth();
 
-  readTasks = async () => {
-    const tasksCol = collection(db, "tasks");
-    const tasksSnapshot = await getDocs(tasksCol);
-    const taskList = [];
-    tasksSnapshot.forEach((task) => {
-      const eachTask = {
-        id: task.id,
-        name: task.data().name,
-        done: task.data().done,
-        inProgress: task.data().inProgress,
-      };
-      taskList.push(eachTask);
-    });
+      const data = await signInWithEmailAndPassword(
+        auth,
+        existingUser.email,
+        existingUser.password
+      );
 
-    this.setState({
-      tasks: taskList,
-    });
+      console.log("data ======> ", data);
+
+      this.setState(
+        {
+          user: data.user,
+        },
+        () => this.props.history.push("/kanban")
+      );
+    } catch (err) {
+      console.log("err ====> ", err);
+    }
   };
 
-  addTask = async (newTask) => {
-    const tasksCol = collection(db, "tasks");
+  register = async (newUser) => {
+    try {
+      const auth = getAuth();
 
-    await addDoc(tasksCol, {
-      name: newTask.name,
-      done: false,
-      inProgress: false,
-    });
+      const data = await createUserWithEmailAndPassword(
+        auth,
+        newUser.email,
+        newUser.password
+      );
 
-    this.readTasks();
+      console.log("data =====> ", data);
+
+      this.setState({ user: data.user }, () =>
+        this.props.history.push("/kanban")
+      );
+    } catch (err) {
+      console.log("err ====> ", err);
+    }
   };
 
-  updateTask = async (task) => {
-    console.log("update task passed in ======> ", task);
-    const tasksCol = collection(db, "tasks");
+  logout = () => {
+    const auth = getAuth();
 
-    const taskDoc = doc(tasksCol, task.id);
-
-    await setDoc(taskDoc, {
-      done: task.done,
-      inProgress: task.inProgress,
-      name: task.name,
-    });
-
-    this.readTasks();
-  };
-
-  deleteTask = async (id) => {
-    const tasksCol = collection(db, "tasks");
-
-    const taskDoc = doc(tasksCol, id);
-
-    await deleteDoc(taskDoc);
-
-    this.readTasks();
+    signOut(auth)
+      .then(() => {
+        this.setState(
+          {
+            user: null,
+          },
+          () => this.props.history.push("/")
+        );
+      })
+      .catch((err) => {
+        console.log("err ====> ", err);
+      });
   };
 
   render() {
     return (
       <div className="App">
-        <Navbar />
-        <div className="columns-container">
-          <TaskColumn
-            tasks={this.state.tasks}
-            addTask={this.addTask}
-            updateTask={this.updateTask}
-            deleteTask={this.deleteTask}
-          />
-          <InProgressColumn
-            tasks={this.state.tasks}
-            updateTask={this.updateTask}
-            deleteTask={this.deleteTask}
-          />
-          <DoneColumn tasks={this.state.tasks} deleteTask={this.deleteTask} />
-        </div>
+        <Navbar history={this.props.history} user={this.state.user} />
+        <Route exact path="/login">
+          <Login login={this.login} />
+        </Route>
+        <Route exact path="/register">
+          <Register register={this.register} />
+        </Route>
+        <Route exact path="/logout" render={() => this.logout()} />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/Kanban">
+            <Kanban />
+          </Route>
+        </Switch>
       </div>
     );
   }
