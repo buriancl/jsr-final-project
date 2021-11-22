@@ -15,8 +15,8 @@ const TaskCard = (props) => {
 
   if (modal === false) {
     return (
-      <div className="task-card">
-        <div className="task-name" onClick={toggleModal}>
+      <div className="taskCardContainer">
+        <div className="taskNameDisplay" onClick={toggleModal}>
           {props.name}
         </div>
       </div>

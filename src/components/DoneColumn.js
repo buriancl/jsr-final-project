@@ -24,7 +24,7 @@ const DoneColumn = ({ tasks, deleteTask, updateTask }) => {
   return (
     <div className="tasksColumnContainer">
       <h3>Done</h3>
-      <ul className="tasksList">{allTasks}</ul>
+      <ul className="tasksList doneList">{allTasks}</ul>
     </div>
   );
 };

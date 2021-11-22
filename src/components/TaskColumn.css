@@ -62,6 +62,11 @@
 }
 
 .tasksList {
+  padding: 0 25px;
   min-width: 329px;
   border-right: 2px solid rgb(20, 33, 61);
+}
+
+.doneList {
+  border-right: none;
 }
