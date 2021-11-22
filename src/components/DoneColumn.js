@@ -1,7 +1,6 @@
 import React from "react";
-
-import "./DoneColumn.css";
 import TaskCard from "./TaskCard";
+import "./TaskColumn.css";
 
 const DoneColumn = ({ tasks, deleteTask, updateTask }) => {
   const allTasks = tasks.map((task) => {
@@ -23,9 +22,9 @@ const DoneColumn = ({ tasks, deleteTask, updateTask }) => {
     }
   });
   return (
-    <div className="done-column">
+    <div className="tasksColumnContainer">
       <h3>Done</h3>
-      <ul className="done-list">{allTasks}</ul>
+      <ul className="tasksList">{allTasks}</ul>
     </div>
   );
 };

@@ -1,16 +1,9 @@
 import React, { useState } from "react";
+import "./Login.css";
 
 const Register = ({ register }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,15 +11,17 @@ const Register = ({ register }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="authContainer">
+      <form className="authForm" onSubmit={handleSubmit}>
         <div>
           <input
             type="text"
             placeholder="Email"
             name="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         </div>
         <div>
@@ -35,14 +30,23 @@ const Register = ({ register }) => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
+
+        <div></div>
         <div>
-          <button type="submit">Signup</button>
+          <button className="authBtn" type="submit">
+            Signup
+          </button>
         </div>
-        <div>
-          Already have an account? <a href="/login">Login!</a>
+        <div className="authMessage">
+          Already have an account?{" "}
+          <a className="authSwitchLink" href="/login">
+            Login!
+          </a>
         </div>
       </form>
     </div>

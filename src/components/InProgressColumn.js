@@ -1,7 +1,8 @@
 import React from "react";
 
-import "./InProgressColumn.css";
 import TaskCard from "./TaskCard";
+
+import "./TaskColumn.css";
 
 const InProgressColumn = ({ tasks, updateTask, deleteTask }) => {
   const allTasks = tasks.map((task) => {
@@ -23,9 +24,9 @@ const InProgressColumn = ({ tasks, updateTask, deleteTask }) => {
     }
   });
   return (
-    <div className="in-progress-column">
+    <div className="tasksColumnContainer">
       <h3>In Progress</h3>
-      <ul className="in-progress-list">{allTasks}</ul>
+      <ul className="tasksList">{allTasks}</ul>
     </div>
   );
 };

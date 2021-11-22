@@ -1,13 +1,6 @@
-.task-card {
-  border: 1px solid yellow;
-  width: 85%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin: 12px 0;
-  padding: 10px 5px;
+.taskCardContainer {
 }
 
-.task-name {
-  border: 1px solid orangered;
+.taskNameDisplay {
+  color: white;
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TaskModal from "./TaskModal";
-
 import "./TaskCard.css";
 
 const TaskCard = (props) => {
@@ -24,7 +23,7 @@ const TaskCard = (props) => {
     );
   } else {
     return (
-      <div className="task-card">
+      <div className="taskCardContainer">
         <TaskModal
           toggleModal={toggleModal}
           id={props.id}
@@ -36,7 +35,7 @@ const TaskCard = (props) => {
           updateTask={props.updateTask}
           notes={props.notes}
         />
-        <div className="task-name" onClick={toggleModal}>
+        <div className="taskNameDisplay" onClick={toggleModal}>
           {props.name}
         </div>
       </div>

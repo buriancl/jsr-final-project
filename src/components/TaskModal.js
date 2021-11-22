@@ -21,6 +21,11 @@ const TaskModal = (props) => {
     props.updateTask(props.id, done, inProgress, props.name, props.notes);
   }, [done, inProgress]);
 
+  const handleClick = () => {
+    updateProgress();
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
+  };
+
   const updateProgress = () => {
     if (inProgress === false) {
       setInProgress(true);
@@ -46,20 +51,6 @@ const TaskModal = (props) => {
     props.updateTask(props.id, done, inProgress, props.name, notes);
   };
 
-  const handleClick = () => {
-    console.log(
-      "handleClick =====> ",
-      props.id,
-      done,
-      inProgress,
-      props.name,
-      props.notes
-    );
-
-    updateProgress();
-    props.updateTask(props.id, done, inProgress, props.name, props.notes);
-  };
-
   return (
     <div>
       <div className="modal">
@@ -76,11 +67,13 @@ const TaskModal = (props) => {
           </div>
           <div className="btn-row">
             <div className="button-container">
-              {/* {done === false ? {return ( */}
-              <button className="in-progress-button" onClick={handleClick}>
-                <i className="fas fa-angle-double-right"></i>
-              </button>
-              {/* )} : } */}
+              {done === false ? (
+                <>
+                  <button className="in-progress-button" onClick={handleClick}>
+                    <i className="fas fa-angle-double-right"></i>
+                  </button>
+                </>
+              ) : null}
               <button
                 className="delete-button"
                 onClick={() => props.deleteTask(props.id)}

@@ -87,23 +87,25 @@ const Kanban = () => {
   };
 
   return (
-    <div className="columns-container">
-      <TaskColumn
-        tasks={tasks}
-        addTask={addTask}
-        updateTask={updateTask}
-        deleteTask={deleteTask}
-      />
-      <InProgressColumn
-        tasks={tasks}
-        updateTask={updateTask}
-        deleteTask={deleteTask}
-      />
-      <DoneColumn
-        tasks={tasks}
-        deleteTask={deleteTask}
-        updateTask={updateTask}
-      />
+    <div className="kanbanContainer">
+      <div className="columns-container">
+        <TaskColumn
+          tasks={tasks}
+          addTask={addTask}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+        />
+        <InProgressColumn
+          tasks={tasks}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+        />
+        <DoneColumn
+          tasks={tasks}
+          deleteTask={deleteTask}
+          updateTask={updateTask}
+        />
+      </div>
     </div>
   );
 };

@@ -5,27 +5,22 @@ import "./Navbar.css";
 
 const Navbar = ({ user }) => {
   return (
-    <header>
+    <header className="navbar">
       <div className="logo">
-        <NavLink exact to="/">
-          Kanban
+        <NavLink className="logoName" exact to="/">
+          my
+          <span className="logoSpan">Kanban</span>
         </NavLink>
       </div>
       <nav className="authentication-row">
         {user ? (
           <>
-            <NavLink exact to="/kanban">
-              Kanban Board
-            </NavLink>
-            <NavLink exact to="/logout">
+            <p>Welcome {user.email}!</p>
+            <NavLink className="authLink" exact to="/logout">
               LOGOUT
             </NavLink>
           </>
-        ) : (
-          <NavLink exact to="/login">
-            SIGNUP/LOGIN
-          </NavLink>
-        )}
+        ) : null}
       </nav>
     </header>
   );

@@ -39,15 +39,20 @@ const TaskColumn = ({ tasks, updateTask, deleteTask, addTask }) => {
   });
 
   return (
-    <div className="tasks-column">
+    <div className="tasksColumnContainer">
       <h3>Tasks</h3>
-      <div className="tasks-control-bar">
+      <div className="tasksFormContainer">
         <form onSubmit={handleSubmit}>
-          <input required onChange={handleChange} value={newTaskName} />
-          <button className="task-submit">+</button>
+          <input
+            required
+            onChange={handleChange}
+            value={newTaskName}
+            placeholder="New Task"
+          />
+          <button className="tasksFormInputBtn">+</button>
         </form>
       </div>
-      <ul className="tasks-list">{allTasks}</ul>
+      <ul className="tasksList">{allTasks}</ul>
     </div>
   );
 };

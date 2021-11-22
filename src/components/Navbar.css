@@ -1,10 +1,40 @@
 .navbar {
-  border: 1px solid green;
-  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url(../images/pexels-cottonbro-3826435.jpg);
+  background-repeat: none;
+  background-size: cover;
+  color: rgb(229, 229, 229);
+  padding: 5px 10px;
 }
 
 .logo {
   font-size: 28px;
-  font-weight: 900;
   padding: 20px 10px;
+}
+
+.logoName {
+  text-decoration: none;
+  color: rgb(229, 229, 229);
+}
+
+.logoSpan {
+  color: rgb(252, 163, 17);
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+.authentication-row {
+  display: flex;
+  align-items: center;
+}
+
+.authLink {
+  color: rgb(229, 229, 229);
+  margin: 0 10px 0 20px;
+  padding: 10px 10px 10px 20px;
+  border-left: 3px solid rgb(229, 229, 229);
+  text-decoration: none;
+  cursor: pointer;
 }

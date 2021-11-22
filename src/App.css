@@ -1,6 +1,5 @@
-.columns-container {
-  display: flex;
-  justify-content: space-between;
-  width: 95vw;
-  margin: 24px auto;
+body {
+  background-image: url("./images/pexels-johannes-plenio-1103970.jpg");
+  background-repeat: none;
+  background-size: cover;
 }
