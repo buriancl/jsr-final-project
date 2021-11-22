@@ -3,8 +3,8 @@ import React from "react";
 import "./DoneColumn.css";
 import TaskCard from "./TaskCard";
 
-const DoneColumn = (props) => {
-  const allTasks = props.tasks.map((task) => {
+const DoneColumn = ({ tasks, deleteTask, updateTask }) => {
+  const allTasks = tasks.map((task) => {
     if (task.done === true) {
       return (
         <TaskCard
@@ -13,7 +13,9 @@ const DoneColumn = (props) => {
           name={task.name}
           inProgress={task.inProgress}
           done={task.done}
-          deleteTask={props.deleteTask}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+          notes={task.notes}
         />
       );
     } else {

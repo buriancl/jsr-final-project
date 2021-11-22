@@ -1,65 +1,55 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import TaskCard from "./TaskCard";
 
 import "./TaskColumn.css";
 
-export default class TaskColumn extends Component {
-  state = {
-    newTaskName: "",
+const TaskColumn = ({ tasks, updateTask, deleteTask, addTask }) => {
+  const [newTaskName, setNewTaskName] = useState("");
+
+  const handleChange = (e) => {
+    setNewTaskName(e.target.value);
   };
 
-  handleChange = (e) => {
-    this.setState({
-      newTaskName: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newTaskObj = {
-      name: this.state.newTaskName,
+      name: newTaskName,
     };
-    this.props.addTask(newTaskObj);
-    this.setState({
-      newTaskName: "",
-    });
+    addTask(newTaskObj);
+    setNewTaskName("");
   };
 
-  render() {
-    const allTasks = this.props.tasks.map((task) => {
-      if (task.done === false && task.inProgress === false) {
-        return (
-          <TaskCard
-            key={task.id}
-            id={task.id}
-            name={task.name}
-            inProgress={task.inProgress}
-            done={task.done}
-            updateTask={this.props.updateTask}
-            deleteTask={this.props.deleteTask}
-            notes={task.notes}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
+  const allTasks = tasks.map((task) => {
+    if (task.done === false && task.inProgress === false) {
+      return (
+        <TaskCard
+          key={task.id}
+          id={task.id}
+          name={task.name}
+          inProgress={task.inProgress}
+          done={task.done}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+          notes={task.notes}
+        />
+      );
+    } else {
+      return null;
+    }
+  });
 
-    return (
-      <div className="tasks-column">
-        <h3>Tasks</h3>
-        <div className="tasks-control-bar">
-          <form onSubmit={this.handleSubmit}>
-            <input
-              required
-              onChange={this.handleChange}
-              value={this.state.newTaskName}
-            />
-            <button className="task-submit">+</button>
-          </form>
-        </div>
-        <ul className="tasks-list">{allTasks}</ul>
+  return (
+    <div className="tasks-column">
+      <h3>Tasks</h3>
+      <div className="tasks-control-bar">
+        <form onSubmit={handleSubmit}>
+          <input required onChange={handleChange} value={newTaskName} />
+          <button className="task-submit">+</button>
+        </form>
       </div>
-    );
-  }
-}
+      <ul className="tasks-list">{allTasks}</ul>
+    </div>
+  );
+};
+
+export default TaskColumn;

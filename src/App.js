@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import { Switch, Route, NavLink } from "react-router-dom";
 import {
@@ -15,91 +15,72 @@ import Kanban from "./pages/Kanban";
 
 import "./App.css";
 
-export default class App extends React.Component {
-  state = {
-    user: null,
-  };
+const App = ({ history }) => {
+  const [user, setUser] = useState(null);
 
-  login = async (existingUser) => {
+  const login = async (email, password) => {
     try {
       const auth = getAuth();
 
-      const data = await signInWithEmailAndPassword(
-        auth,
-        existingUser.email,
-        existingUser.password
-      );
+      const data = await signInWithEmailAndPassword(auth, email, password);
 
       console.log("data ======> ", data);
 
-      this.setState(
-        {
-          user: data.user,
-        },
-        () => this.props.history.push("/kanban")
-      );
+      setUser(data.user);
+      history.push("/kanban");
     } catch (err) {
       console.log("err ====> ", err);
     }
   };
 
-  register = async (newUser) => {
+  const register = async (email, password) => {
     try {
       const auth = getAuth();
 
-      const data = await createUserWithEmailAndPassword(
-        auth,
-        newUser.email,
-        newUser.password
-      );
+      const data = await createUserWithEmailAndPassword(auth, email, password);
 
       console.log("data =====> ", data);
 
-      this.setState({ user: data.user }, () =>
-        this.props.history.push("/kanban")
-      );
+      setUser(data.user);
+      history.push("/kanban");
     } catch (err) {
       console.log("err ====> ", err);
     }
   };
 
-  logout = () => {
+  const logout = () => {
     const auth = getAuth();
 
     signOut(auth)
       .then(() => {
-        this.setState(
-          {
-            user: null,
-          },
-          () => this.props.history.push("/")
-        );
+        setUser(null);
+        history.push("/");
       })
       .catch((err) => {
         console.log("err ====> ", err);
       });
   };
 
-  render() {
-    return (
-      <div className="App">
-        <Navbar history={this.props.history} user={this.state.user} />
-        <Route exact path="/login">
-          <Login login={this.login} />
+  return (
+    <div className="App">
+      <Navbar user={user} />
+      <Route exact path="/login">
+        <Login login={login} />
+      </Route>
+      <Route exact path="/register">
+        <Register register={register} />
+      </Route>
+      <Route exact path="/logout" render={() => logout()} />
+      <Switch>
+        <Route exact path="/">
+          <Home />
         </Route>
-        <Route exact path="/register">
-          <Register register={this.register} />
+        <Route exact path="/Kanban">
+          <Kanban />
         </Route>
-        <Route exact path="/logout" render={() => this.logout()} />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/Kanban">
-            <Kanban />
-          </Route>
-        </Switch>
-      </div>
-    );
-  }
-}
+      </Switch>
+    </div>
+  );
+};
+
+export default App;

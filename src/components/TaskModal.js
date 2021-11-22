@@ -1,116 +1,92 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 
 import "./TaskModal.css";
 
-export default class TaskModal extends Component {
-  state = {
-    taskToUpdate: {
-      id: "",
-      done: false,
-      inProgress: false,
-      name: "",
-      notes: "",
-    },
-  };
+const TaskModal = (props) => {
+  const [done, setDone] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
+  const [name, setName] = useState("");
+  const [notes, setNotes] = useState("");
 
-  componentDidMount = () => {
-    this.setState({
-      taskToUpdate: {
-        id: "",
-        done: false,
-        inProgress: false,
-        name: "",
-        notes: this.props.notes,
-      },
-    });
-  };
+  useEffect(() => {
+    setName(props.name);
+    setNotes(props.notes);
+  }, []);
 
-  updateProgress = () => {
-    if (this.props.inProgress === false) {
-      this.setState({
-        taskToUpdate: {
-          id: this.props.id,
-          done: false,
-          inProgress: true,
-          name: this.props.name,
-          notes: this.state.notes,
-        },
-      });
+  const updateProgress = () => {
+    if (props.inProgress === false) {
+      setInProgress(true);
     } else {
-      this.setState({
-        taskToUpdate: {
-          id: this.props.id,
-          done: true,
-          inProgress: false,
-          name: this.props.name,
-          notes: this.state.notes,
-        },
-      });
+      setDone(true);
     }
   };
 
-  // handleChange = (e) => {
-  //   this.setState({
-  //     notes: e.target.value,
-  //   });
-  //   console.log("textarea on change =====> ", this.state.notes);
-  // };
-
-  handleSave = () => {
-    this.setState({
-      taskToUpdate: {
-        notes: this.state.notes,
-      },
-    });
-    this.props.updateTask(this.state.taskToUpdate);
+  const handleNameSave = (value) => {
+    console.log("onSaveName =====> ", value.value);
+    setName(value.value);
+    console.log("name ====> ", name);
+    props.updateTask(props.id, done, inProgress, name, props.notes);
   };
 
-  handleClick = async (e) => {
+  const handleNotesSave = (value) => {
+    console.log("onSaveNotes value ====> ", value.value);
+    setNotes(value.value);
+    console.log("notes =====> ", notes);
+    props.updateTask(props.id, done, inProgress, props.name, notes);
+  };
+
+  const handleClick = async (e) => {
     e.preventDefault();
+    console.log(
+      "handleClick =====> ",
+      props.id,
+      done,
+      inProgress,
+      props.name,
+      props.notes
+    );
 
-    await this.updateProgress();
-    this.props.updateTask(this.state.taskToUpdate);
+    await updateProgress();
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
   };
 
-  render() {
-    return (
-      <div>
-        <div className="modal">
-          <div className="overlay"></div>
-          <div className="modal-content">
-            <h2>{this.props.name}</h2>
-            <div className="notes-area">
-              <EditTextarea
-                // onChange={this.handleChange}
-                value={this.state.notes}
-                onSave={this.handleSave}
-              />
-            </div>
+  return (
+    <div>
+      <div className="modal">
+        <div className="overlay"></div>
+        <div className="modal-content">
+          <EditText onChange={setName} value={name} onSave={handleNameSave} />
+          <div className="notes-area">
+            <EditTextarea
+              onChange={setNotes}
+              value={notes}
+              onSave={handleNotesSave}
+              placeholder="Add notes here"
+            />
+          </div>
 
-            <div className="btn-row">
-              <div className="button-container">
-                <button
-                  className="in-progress-button"
-                  onClick={this.handleClick}
-                >
-                  <i className="fas fa-angle-double-right"></i>
-                </button>
-                <button
-                  className="delete-button"
-                  onClick={() => this.props.deleteTask(this.props.id)}
-                >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
-              <button className="close-modal" onClick={this.props.toggleModal}>
-                CLOSE
+          <div className="btn-row">
+            <div className="button-container">
+              <button className="in-progress-button" onClick={handleClick}>
+                <i className="fas fa-angle-double-right"></i>
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => props.deleteTask(props.id)}
+              >
+                <i className="fas fa-times"></i>
               </button>
             </div>
+            <button className="close-modal" onClick={props.toggleModal}>
+              CLOSE
+            </button>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default TaskModal;

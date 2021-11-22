@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import TaskColumn from "../components/TaskColumn";
 import InProgressColumn from "../components/InProgressColumn";
 import DoneColumn from "../components/DoneColumn";
@@ -14,16 +14,14 @@ import {
 
 import "./Kanban.css";
 
-export default class Kanban extends Component {
-  state = {
-    tasks: [],
-  };
+const Kanban = () => {
+  const [tasks, setTasks] = useState([]);
 
-  componentDidMount() {
-    this.readTasks();
-  }
+  useEffect(() => {
+    readTasks();
+  }, []);
 
-  readTasks = async () => {
+  const readTasks = async () => {
     const tasksCol = collection(db, "tasks");
     const tasksSnapshot = await getDocs(tasksCol);
     const taskList = [];
@@ -38,12 +36,10 @@ export default class Kanban extends Component {
       taskList.push(eachTask);
     });
 
-    this.setState({
-      tasks: taskList,
-    });
+    setTasks(taskList);
   };
 
-  addTask = async (newTask) => {
+  const addTask = async (newTask) => {
     const tasksCol = collection(db, "tasks");
 
     await addDoc(tasksCol, {
@@ -53,50 +49,63 @@ export default class Kanban extends Component {
       notes: "",
     });
 
-    this.readTasks();
+    readTasks();
   };
 
-  updateTask = async (task) => {
-    console.log("update task passed in ======> ", task);
+  const updateTask = async (id, done, inProgress, name, notes) => {
+    console.log(
+      "update task passed in ======> ",
+      id,
+      done,
+      inProgress,
+      name,
+      notes
+    );
     const tasksCol = collection(db, "tasks");
 
-    const taskDoc = doc(tasksCol, task.id);
+    const taskDoc = doc(tasksCol, id);
 
     await setDoc(taskDoc, {
-      done: task.done,
-      inProgress: task.inProgress,
-      name: task.name,
+      id,
+      done,
+      inProgress,
+      name,
+      notes,
     });
 
-    this.readTasks();
+    readTasks();
   };
 
-  deleteTask = async (id) => {
+  const deleteTask = async (id) => {
     const tasksCol = collection(db, "tasks");
 
     const taskDoc = doc(tasksCol, id);
 
     await deleteDoc(taskDoc);
 
-    this.readTasks();
+    readTasks();
   };
 
-  render() {
-    return (
-      <div className="columns-container">
-        <TaskColumn
-          tasks={this.state.tasks}
-          addTask={this.addTask}
-          updateTask={this.updateTask}
-          deleteTask={this.deleteTask}
-        />
-        <InProgressColumn
-          tasks={this.state.tasks}
-          updateTask={this.updateTask}
-          deleteTask={this.deleteTask}
-        />
-        <DoneColumn tasks={this.state.tasks} deleteTask={this.deleteTask} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="columns-container">
+      <TaskColumn
+        tasks={tasks}
+        addTask={addTask}
+        updateTask={updateTask}
+        deleteTask={deleteTask}
+      />
+      <InProgressColumn
+        tasks={tasks}
+        updateTask={updateTask}
+        deleteTask={deleteTask}
+      />
+      <DoneColumn
+        tasks={tasks}
+        deleteTask={deleteTask}
+        updateTask={updateTask}
+      />
+    </div>
+  );
+};
+
+export default Kanban;
