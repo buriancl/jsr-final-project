@@ -81,7 +81,7 @@ const TaskModal = (props) => {
                 <i className="fas fa-times"></i>
               </button>
             </div>
-            <button className="close-modal" onClick={props.toggleModal}>
+            <button className="closeModalBtn" onClick={props.toggleModal}>
               CLOSE
             </button>
           </div>

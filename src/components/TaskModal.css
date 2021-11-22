@@ -2,22 +2,14 @@ body.active-modal {
   overflow-y: hidden;
 }
 
-.btn-modal {
-  padding: 10px 20px;
-  display: block;
-  margin: 100px auto 0;
-  font-size: 18px;
-}
-
-.modal,
-.overlay {
-  width: 100vw;
-  height: 100vh;
+.modal {
+  position: fixed;
+  /* width: 100vw;
+  height: 100vh; */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  position: fixed;
 }
 
 .overlay {
@@ -26,10 +18,10 @@ body.active-modal {
 
 .modal-content {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  line-height: 1.4;
+  line-height: 1.4em;
   background: #f1f1f1;
   padding: 14px 28px;
   border-radius: 3px;
@@ -37,9 +29,18 @@ body.active-modal {
   min-width: 300px;
 }
 
-.close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 7px;
+.closeModalBtn {
+  background-color: rgb(252, 163, 17);
+  border: 1px solid rgb(20, 33, 61);
+  border-radius: 6px;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
+    0px 18px 23px rgba(0, 0, 0, 0.1);
+  color: rgb(20, 33, 61);
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.5em;
+  padding: 8px 16px;
+  margin: 5px 0 20px;
 }
