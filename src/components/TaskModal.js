@@ -12,15 +12,24 @@ const TaskModal = (props) => {
 
   useEffect(() => {
     setName(props.name);
+    setInProgress(props.inProgress);
+    setDone(props.done);
     setNotes(props.notes);
   }, []);
 
+  useEffect(() => {
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
+  }, [done, inProgress]);
+
   const updateProgress = () => {
-    if (props.inProgress === false) {
+    if (inProgress === false) {
       setInProgress(true);
+      setDone(false);
     } else {
+      setInProgress(false);
       setDone(true);
     }
+    console.log("updateProgress =====> ", inProgress, done);
   };
 
   const handleNameSave = (value) => {
@@ -37,8 +46,7 @@ const TaskModal = (props) => {
     props.updateTask(props.id, done, inProgress, props.name, notes);
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     console.log(
       "handleClick =====> ",
       props.id,
@@ -48,7 +56,7 @@ const TaskModal = (props) => {
       props.notes
     );
 
-    await updateProgress();
+    updateProgress();
     props.updateTask(props.id, done, inProgress, props.name, props.notes);
   };
 
@@ -66,12 +74,13 @@ const TaskModal = (props) => {
               placeholder="Add notes here"
             />
           </div>
-
           <div className="btn-row">
             <div className="button-container">
+              {/* {done === false ? {return ( */}
               <button className="in-progress-button" onClick={handleClick}>
                 <i className="fas fa-angle-double-right"></i>
               </button>
+              {/* )} : } */}
               <button
                 className="delete-button"
                 onClick={() => props.deleteTask(props.id)}
