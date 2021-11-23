@@ -1,9 +1,26 @@
-import React, { useState } from "react";
-import TaskModal from "./TaskModal";
+import React, { useState, useEffect } from "react";
+// import TaskModal from "./TaskModal";
+import { EditText, EditTextarea } from "react-edit-text";
+import "react-edit-text/dist/index.css";
 import "./TaskCard.css";
 
 const TaskCard = (props) => {
+  const [done, setDone] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
+  const [name, setName] = useState("");
+  const [notes, setNotes] = useState("");
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    setName(props.name);
+    setInProgress(props.inProgress);
+    setDone(props.done);
+    setNotes(props.notes);
+  }, []);
+
+  useEffect(() => {
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
+  }, [done, inProgress]);
 
   const toggleModal = () => {
     if (modal === false) {
@@ -11,6 +28,36 @@ const TaskCard = (props) => {
     } else {
       setModal(false);
     }
+  };
+
+  const handleClick = () => {
+    updateProgress();
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
+  };
+
+  const updateProgress = () => {
+    if (inProgress === false) {
+      setInProgress(true);
+      setDone(false);
+    } else {
+      setInProgress(false);
+      setDone(true);
+    }
+    console.log("updateProgress =====> ", inProgress, done);
+  };
+
+  const handleNameSave = (value) => {
+    console.log("onSaveName =====> ", value.value);
+    setName(value.value);
+    console.log("name ====> ", name);
+    props.updateTask(props.id, done, inProgress, name, props.notes);
+  };
+
+  const handleNotesSave = (value) => {
+    console.log("onSaveNotes value ====> ", value.value);
+    setNotes(value.value);
+    console.log("notes =====> ", notes);
+    props.updateTask(props.id, done, inProgress, props.name, notes);
   };
 
   if (modal === false) {
@@ -24,7 +71,7 @@ const TaskCard = (props) => {
   } else {
     return (
       <div className="taskCardContainer">
-        <TaskModal
+        {/* <TaskModal
           toggleModal={toggleModal}
           id={props.id}
           name={props.name}
@@ -34,9 +81,52 @@ const TaskCard = (props) => {
           deleteTask={props.deleteTask}
           updateTask={props.updateTask}
           notes={props.notes}
-        />
+        /> */}
         <div className="taskNameDisplay" onClick={toggleModal}>
           {props.name}
+        </div>
+        <div>
+          <div className="modal">
+            <div className="overlay"></div>
+            <div className="modal-content">
+              <EditText
+                onChange={setName}
+                value={name}
+                onSave={handleNameSave}
+              />
+              <div className="notes-area">
+                <EditTextarea
+                  onChange={setNotes}
+                  value={notes}
+                  onSave={handleNotesSave}
+                  placeholder="Add notes here"
+                />
+              </div>
+              <div className="btn-row">
+                <div className="button-container">
+                  {done === false ? (
+                    <>
+                      <button
+                        className="in-progress-button"
+                        onClick={handleClick}
+                      >
+                        <i className="fas fa-angle-double-right"></i>
+                      </button>
+                    </>
+                  ) : null}
+                  <button
+                    className="delete-button"
+                    onClick={() => props.deleteTask(props.id)}
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+                <button className="closeModalBtn" onClick={toggleModal}>
+                  CLOSE
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
