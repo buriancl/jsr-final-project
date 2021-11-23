@@ -17,18 +17,61 @@
   text-align: center;
 }
 
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editorsContainer {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nameEditText,
+.notesEditTextArea {
+  width: 90%;
+  border: 1px solid rgb(20, 33, 61);
+  border-radius: 6px;
+  background: rgb(229, 229, 229);
+  color: rgb(20, 33, 61);
+  font-family: "Nunito", sans-serif;
+  font-size: 1em;
+  padding: 4px 20px 0;
+  margin: 20px 5px;
+}
+
+.btnContainer {
+  display: flex;
+  margin: 0 20px;
+  justify-content: space-between;
+}
+
+.inProgressBtn,
+.deleteBtn,
 .closeModalBtn {
-  background-color: rgb(252, 163, 17);
   border: 1px solid rgb(20, 33, 61);
   border-radius: 6px;
   box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
     0px 18px 23px rgba(0, 0, 0, 0.1);
   color: rgb(20, 33, 61);
   cursor: pointer;
-  font-family: "Nunito", sans-serif;
   font-size: 1em;
   font-weight: 700;
   line-height: 1.5em;
   padding: 8px 16px;
   margin: 5px 0 20px;
+}
+
+.inProgressBtn {
+  background-color: rgb(2, 73, 2);
+}
+.deleteBtn {
+  background-color: rgb(153, 6, 6);
+}
+
+.closeModalBtn {
+  background-color: rgb(252, 163, 17);
 }

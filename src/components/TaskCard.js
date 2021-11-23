@@ -87,45 +87,39 @@ const TaskCard = (props) => {
         </div>
         <div>
           <div className="modal">
-            <div className="overlay"></div>
-            <div className="modal-content">
+            <div className="editorsContainer">
               <EditText
                 onChange={setName}
                 value={name}
                 onSave={handleNameSave}
+                className="nameEditText"
               />
-              <div className="notes-area">
-                <EditTextarea
-                  onChange={setNotes}
-                  value={notes}
-                  onSave={handleNotesSave}
-                  placeholder="Add notes here"
-                />
-              </div>
-              <div className="btn-row">
-                <div className="button-container">
-                  {done === false ? (
-                    <>
-                      <button
-                        className="in-progress-button"
-                        onClick={handleClick}
-                      >
-                        <i className="fas fa-angle-double-right"></i>
-                      </button>
-                    </>
-                  ) : null}
-                  <button
-                    className="delete-button"
-                    onClick={() => props.deleteTask(props.id)}
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
-                </div>
-                <button className="closeModalBtn" onClick={toggleModal}>
-                  CLOSE
-                </button>
-              </div>
+              <EditTextarea
+                className="notesEditTextArea"
+                onChange={setNotes}
+                value={notes}
+                onSave={handleNotesSave}
+                placeholder="Add notes here"
+              />
             </div>
+          </div>
+          <div className="btnContainer">
+            {done === false ? (
+              <>
+                <button className="inProgressBtn" onClick={handleClick}>
+                  <i className="fas fa-angle-double-right"></i>
+                </button>
+              </>
+            ) : null}
+            <button
+              className="deleteBtn"
+              onClick={() => props.deleteTask(props.id)}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+            <button className="closeModalBtn" onClick={toggleModal}>
+              CLOSE
+            </button>
           </div>
         </div>
       </div>
