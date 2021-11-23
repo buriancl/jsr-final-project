@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import TaskModal from "./TaskModal";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import "./TaskCard.css";
 
 const TaskCard = (props) => {
-  const [done, setDone] = useState(false);
-  const [inProgress, setInProgress] = useState(false);
   const [name, setName] = useState("");
+  const [inProgress, setInProgress] = useState(false);
+  const [done, setDone] = useState(false);
   const [notes, setNotes] = useState("");
   const [modal, setModal] = useState(false);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setName(props.name);
@@ -18,7 +19,13 @@ const TaskCard = (props) => {
     setNotes(props.notes);
   }, []);
 
+  const firstUpdate = useRef(true);
+
   useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
     props.updateTask(props.id, done, inProgress, props.name, props.notes);
   }, [done, inProgress]);
 
@@ -30,33 +37,33 @@ const TaskCard = (props) => {
     }
   };
 
-  const handleClick = () => {
-    updateProgress();
-    props.updateTask(props.id, done, inProgress, props.name, props.notes);
-  };
+  // const updateProgress = () => {
+  //   if (inProgress === false && done === false) {
+  //     setInProgress(true);
+  //   } else {
+  //     setInProgress(false);
+  //     setDone(true);
+  //   }
+  // };
 
-  const updateProgress = () => {
-    if (inProgress === false) {
+  const handleClick = () => {
+    // updateProgress();
+    if (inProgress === false && done === false) {
       setInProgress(true);
-      setDone(false);
     } else {
       setInProgress(false);
       setDone(true);
     }
-    console.log("updateProgress =====> ", inProgress, done);
+    props.updateTask(props.id, done, inProgress, props.name, props.notes);
   };
 
   const handleNameSave = (value) => {
-    console.log("onSaveName =====> ", value.value);
     setName(value.value);
-    console.log("name ====> ", name);
     props.updateTask(props.id, done, inProgress, name, props.notes);
   };
 
   const handleNotesSave = (value) => {
-    console.log("onSaveNotes value ====> ", value.value);
     setNotes(value.value);
-    console.log("notes =====> ", notes);
     props.updateTask(props.id, done, inProgress, props.name, notes);
   };
 

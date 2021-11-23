@@ -6,7 +6,7 @@ import "./TaskColumn.css";
 
 const InProgressColumn = ({ tasks, updateTask, deleteTask }) => {
   const allTasks = tasks.map((task) => {
-    if (task.inProgress === true) {
+    if (task.inProgress === true && task.done === false) {
       return (
         <TaskCard
           key={task.id}

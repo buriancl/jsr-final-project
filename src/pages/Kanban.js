@@ -53,14 +53,6 @@ const Kanban = () => {
   };
 
   const updateTask = async (id, done, inProgress, name, notes) => {
-    console.log(
-      "update task passed in ======> ",
-      id,
-      done,
-      inProgress,
-      name,
-      notes
-    );
     const tasksCol = collection(db, "tasks");
 
     const taskDoc = doc(tasksCol, id);
