@@ -8,10 +8,7 @@ const TaskCard = (props) => {
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
   const [modal, setModal] = useState(false);
-<<<<<<< HEAD
-=======
-  const [count, setCount] = useState(1);
->>>>>>> 1b1b36b5ee6c9068df68cc459295457ed2940541
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setName(props.name);
@@ -38,7 +35,6 @@ const TaskCard = (props) => {
   };
 
   const handleClick = () => {
-   
     setCount(count + 1);
 
     props.updateTask(props.id, count, props.name, props.notes);
@@ -51,7 +47,7 @@ const TaskCard = (props) => {
 
   const handleNotesSave = (value) => {
     setNotes(value.value);
-    props.updateTask(props.id, props.cout, props.name, notes);
+    props.updateTask(props.id, props.count, props.name, notes);
   };
 
   if (modal === false) {
