@@ -29,8 +29,9 @@ const Kanban = () => {
       const eachTask = {
         id: task.id,
         name: task.data().name,
-        done: task.data().done,
-        inProgress: task.data().inProgress,
+        count: task.data().count,
+        // done: task.data().done,
+        // inProgress: task.data().inProgress,
         notes: task.data().notes,
       };
       taskList.push(eachTask);
@@ -44,23 +45,25 @@ const Kanban = () => {
 
     await addDoc(tasksCol, {
       name: newTask.name,
-      done: false,
-      inProgress: false,
+      count: 1,
+      // done: false,
+      // inProgress: false,
       notes: "",
     });
 
     readTasks();
   };
 
-  const updateTask = async (id, done, inProgress, name, notes) => {
+  const updateTask = async (id, count, name, notes) => {
     const tasksCol = collection(db, "tasks");
 
     const taskDoc = doc(tasksCol, id);
 
     await setDoc(taskDoc, {
       id,
-      done,
-      inProgress,
+      count,
+      // done,
+      // inProgress,
       name,
       notes,
     });

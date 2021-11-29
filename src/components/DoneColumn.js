@@ -4,14 +4,13 @@ import "./TaskColumn.css";
 
 const DoneColumn = ({ tasks, deleteTask, updateTask }) => {
   const allTasks = tasks.map((task) => {
-    if (task.done === true) {
+    if (task.count === 3) {
       return (
         <TaskCard
           key={task.id}
           id={task.id}
           name={task.name}
-          inProgress={task.inProgress}
-          done={task.done}
+          count={task.count}
           updateTask={updateTask}
           deleteTask={deleteTask}
           notes={task.notes}

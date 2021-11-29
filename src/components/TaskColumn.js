@@ -20,14 +20,13 @@ const TaskColumn = ({ tasks, updateTask, deleteTask, addTask }) => {
   };
 
   const allTasks = tasks.map((task) => {
-    if (task.done === false && task.inProgress === false) {
+    if (task.count === 1) {
       return (
         <TaskCard
           key={task.id}
           id={task.id}
           name={task.name}
-          inProgress={task.inProgress}
-          done={task.done}
+          count={task.count}
           updateTask={updateTask}
           deleteTask={deleteTask}
           notes={task.notes}

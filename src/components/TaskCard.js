@@ -6,15 +6,16 @@ import "./TaskCard.css";
 
 const TaskCard = (props) => {
   const [name, setName] = useState("");
-  const [inProgress, setInProgress] = useState(false);
-  const [done, setDone] = useState(false);
   const [notes, setNotes] = useState("");
   const [modal, setModal] = useState(false);
+<<<<<<< HEAD
+=======
+  const [count, setCount] = useState(1);
+>>>>>>> 1b1b36b5ee6c9068df68cc459295457ed2940541
 
   useEffect(() => {
     setName(props.name);
-    setInProgress(props.inProgress);
-    setDone(props.done);
+    setCount(props.count);
     setNotes(props.notes);
   }, []);
 
@@ -25,8 +26,8 @@ const TaskCard = (props) => {
       firstUpdate.current = false;
       return;
     }
-    props.updateTask(props.id, done, inProgress, props.name, props.notes);
-  }, [done, inProgress]);
+    props.updateTask(props.id, count, props.name, props.notes);
+  }, [count]);
 
   const toggleModal = () => {
     if (modal === false) {
@@ -36,34 +37,21 @@ const TaskCard = (props) => {
     }
   };
 
-  // const updateProgress = () => {
-  //   if (inProgress === false && done === false) {
-  //     setInProgress(true);
-  //   } else {
-  //     setInProgress(false);
-  //     setDone(true);
-  //   }
-  // };
-
   const handleClick = () => {
-    // updateProgress();
-    if (inProgress === false && done === false) {
-      setInProgress(true);
-    } else {
-      setInProgress(false);
-      setDone(true);
-    }
-    props.updateTask(props.id, done, inProgress, props.name, props.notes);
+   
+    setCount(count + 1);
+
+    props.updateTask(props.id, count, props.name, props.notes);
   };
 
   const handleNameSave = (value) => {
     setName(value.value);
-    props.updateTask(props.id, done, inProgress, name, props.notes);
+    props.updateTask(props.id, props.count, name, props.notes);
   };
 
   const handleNotesSave = (value) => {
     setNotes(value.value);
-    props.updateTask(props.id, done, inProgress, props.name, notes);
+    props.updateTask(props.id, props.cout, props.name, notes);
   };
 
   if (modal === false) {
@@ -110,7 +98,7 @@ const TaskCard = (props) => {
             </div>
           </div>
           <div className="btnContainer">
-            {done === false ? (
+            {count < 3 ? (
               <>
                 <button className="inProgressBtn" onClick={handleClick}>
                   <i className="fas fa-angle-double-right"></i>
