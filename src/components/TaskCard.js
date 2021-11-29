@@ -10,7 +10,6 @@ const TaskCard = (props) => {
   const [done, setDone] = useState(false);
   const [notes, setNotes] = useState("");
   const [modal, setModal] = useState(false);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setName(props.name);
